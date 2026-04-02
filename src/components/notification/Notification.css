@@ -1,0 +1,30 @@
+.notification-message {
+  background-color: #f5f5f5;
+  border-left: 3px solid #4a90e2;
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: #333;
+  max-width: 100%;
+  margin-left: 5em;
+  margin-right: 10em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@keyframes colorPulse {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: #ff8c00;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.notification-pulse {
+  animation: colorPulse 2s ease-in-out;
+}

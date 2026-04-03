@@ -9,7 +9,7 @@ import type ChatService from "../../services/ChatService";
  */
 export default class ChatListViewModel {
   readonly chats: Chat[];
-  private readonly chatService: ChatService;
+  readonly chatService: ChatService;
 
   constructor(chatService: ChatService) {
     this.chatService = chatService;

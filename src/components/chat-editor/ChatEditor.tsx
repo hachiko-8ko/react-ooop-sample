@@ -1,16 +1,10 @@
 import { useEffect, useEffectEvent, useRef } from "react";
-import { useDispatch } from "react-redux";
-
-import { FormService } from "../../services/FormService";
-import GlobalStateService from "../../services/GlobalStateService";
-import useFormData from "../../utilities/UseFormData";
-import ChatEditorViewModel from "./ChatEditorViewModel";
 
 import type ChatService from "../../services/ChatService";
-import type { ModelList } from "../../model/Chat";
+import useInjectChatEditor from "./ChatEditorInject";
 
 interface Props {
-  chats: ChatService; // references the parent's chat list
+  chatService: ChatService; // references the parent's chat list
 }
 
 /**
@@ -18,20 +12,7 @@ interface Props {
  * It's very basic, just a couple inputs.
  */
 export default function ChatEditor(props: Props) {
-  // Set up form update custom hook
-  const [formData, setFormData, handleChange] = useFormData({
-    id: "",
-    llmModel: "" as ModelList | "",
-    prompt: "",
-  });
-
-  const forms = new FormService(formData, setFormData);
-  const dispatch = useDispatch();
-  const vm = new ChatEditorViewModel(
-    props.chats,
-    forms,
-    new GlobalStateService(dispatch),
-  );
+  const [vm, formData, handleChange] = useInjectChatEditor(props.chatService);
 
   // Set up JS events for bootstrap. This was far more work than it needed to be.
   const modalRef = useRef<HTMLDivElement>(null);

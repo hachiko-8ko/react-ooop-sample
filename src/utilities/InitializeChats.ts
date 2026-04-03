@@ -1,6 +1,6 @@
-import { Chat } from '../model/Chat';
+import { Chat } from "../model/Chat";
 
-import type GlobalStateService from "./GlobalStateService";
+import type GlobalStateService from "../services/GlobalStateService";
 
 export default function initializeChats(store: GlobalStateService) {
   const chats = [

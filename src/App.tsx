@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-import ChatCounter from './components/chat-counter/ChatCounter';
-import ChatList from './components/chat-list/ChatList';
-import Notification from './components/notification/Notification';
-import GlobalStateService from './services/GlobalStateService';
-import initializeChats from './services/InitializeChats';
+import ChatCounter from "./components/chat-counter/ChatCounter";
+import ChatList from "./components/chat-list/ChatList";
+import Notification from "./components/notification/Notification";
+import GlobalStateService from "./services/GlobalStateService";
+import initializeChats from "./utilities/InitializeChats";
 
 function App() {
   // Add some data when first starting

@@ -1,14 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useInjectChatListViewModel from "./ChatListInject";
 
-import ChatService from "../../services/ChatService";
 import ChatEditor from "../chat-editor/ChatEditor";
-import ChatListViewModel from "./ChatListViewModel";
 
-import type { Chat } from "../../model/Chat";
 import type { RootState } from "../../global-state/Store";
 
 /**
@@ -18,15 +16,13 @@ import type { RootState } from "../../global-state/Store";
  * and return it.
  */
 export default function ChatList() {
-  const [chats, chatsUpdater] = useState<Chat[]>([]);
-  const chatService = new ChatService(chats, chatsUpdater);
-  const vm = new ChatListViewModel(chatService);
+  const vm = useInjectChatListViewModel();
 
   // The global state has an initial set of chats that I want to see in the grid
   // (because I want to test both kinds of state).
   const startingChats = useSelector((state: RootState) => state.chat.chats);
   useEffect(() => {
-    if (startingChats && startingChats.length && !chats.length) {
+    if (startingChats && startingChats.length && !vm.chats.length) {
       vm.replaceChats(startingChats);
     }
   }, [startingChats]);
@@ -90,7 +86,7 @@ export default function ChatList() {
           </div>
         </div>
       </div>
-      <ChatEditor chats={chatService}></ChatEditor>
+      <ChatEditor chatService={vm.chatService}></ChatEditor>
     </div>
   );
 }

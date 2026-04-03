@@ -1,18 +1,19 @@
-import './Notification.css';
+import "./Notification.css";
 
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-import type { RootState } from "../../global-state/Store";
+import type { RootStore } from "../../global-state/Store";
+
 /**
  * Always updated with the most-recent response from any chatbot.
  */
 export default function Notification() {
+  // bind the notification from redux to the element, and when it changes, flash once
   const notification = useSelector(
-    (state: RootState) => state.notification.notification,
+    (state: RootStore) => state.notification.notification,
   );
   const [pulse, setPulse] = useState(false);
-
   useEffect(() => {
     if (notification) {
       setPulse(true);

@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import ChatService from "../../services/ChatService";
 import ChatListViewModel from "./ChatListViewModel";
+import { useSelector } from "react-redux";
 
 import type { Chat } from "../../model/Chat";
+import type { RootStore } from "../../global-state/Store";
 
 /**
  * The rules of react hooks state that you can only call hooks
@@ -18,8 +20,23 @@ import type { Chat } from "../../model/Chat";
  *
  * @returns ChatListViewModel
  */
-export default function useInjectChatListViewModel() {
+export default function useInjectChatListViewModel(initFromRedux = true) {
   const [chats, chatsUpdater] = useState<Chat[]>([]);
   const chatService = new ChatService(chats, chatsUpdater);
-  return new ChatListViewModel(chatService);
+  const vm = new ChatListViewModel(chatService);
+
+  if (!initFromRedux) {
+    return vm;
+  }
+
+  // The global state has an initial set of chats that I want to see in the grid
+  // (because I want to test both kinds of state).
+  const startingChats = useSelector((state: RootStore) => state.chat.chats);
+  useEffect(() => {
+    if (startingChats && startingChats.length && !vm.chats.length) {
+      vm.replaceChats(startingChats);
+    }
+  }, [startingChats]);
+
+  return vm;
 }

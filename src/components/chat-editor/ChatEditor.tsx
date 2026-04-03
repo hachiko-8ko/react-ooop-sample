@@ -1,7 +1,8 @@
-import { useEffect, useEffectEvent, useRef } from "react";
+import { useRef } from "react";
 
 import type ChatService from "../../services/ChatService";
 import useInjectChatEditor from "./ChatEditorInject";
+import useEventListener from "../../utilities/UseEventListener";
 
 interface Props {
   chatService: ChatService; // references the parent's chat list
@@ -14,23 +15,11 @@ interface Props {
 export default function ChatEditor(props: Props) {
   const [vm, formData, handleChange] = useInjectChatEditor(props.chatService);
 
-  // Set up JS events for bootstrap. This was far more work than it needed to be.
+  // Add bootstrap modal event
   const modalRef = useRef<HTMLDivElement>(null);
-  const handleModalShow = useEffectEvent((evt: any) => {
+  useEventListener(modalRef, "show.bs.modal", (evt: any) => {
     vm.loadModal(evt);
   });
-  useEffect(() => {
-    // add the events
-    const modalElement = modalRef.current;
-    if (!modalElement) {
-      return;
-    }
-    modalElement.addEventListener("show.bs.modal", handleModalShow);
-    // cleanup after unmounting
-    return () => {
-      modalElement.removeEventListener("show.bs.modal", handleModalShow);
-    };
-  }, []);
 
   // Basic default bootstrap modal, vanilla through and through
   return (

@@ -1,7 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 
-import { chatSlice } from './ChatStore';
-import { notificationSlice } from './NotificationStore';
+import { chatSlice } from "./ChatStore";
+import { notificationSlice } from "./NotificationStore";
 
 /**
  * Redux store.
@@ -13,5 +13,5 @@ export const store = configureStore({
   },
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootStore = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

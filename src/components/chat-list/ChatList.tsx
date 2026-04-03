@@ -1,13 +1,8 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useInjectChatListViewModel from "./ChatListInject";
 
 import ChatEditor from "../chat-editor/ChatEditor";
-
-import type { RootState } from "../../global-state/Store";
 
 /**
  * This handles the front-end visible code to display a list of chats.
@@ -17,15 +12,6 @@ import type { RootState } from "../../global-state/Store";
  */
 export default function ChatList() {
   const vm = useInjectChatListViewModel();
-
-  // The global state has an initial set of chats that I want to see in the grid
-  // (because I want to test both kinds of state).
-  const startingChats = useSelector((state: RootState) => state.chat.chats);
-  useEffect(() => {
-    if (startingChats && startingChats.length && !vm.chats.length) {
-      vm.replaceChats(startingChats);
-    }
-  }, [startingChats]);
 
   return (
     <div className="main-container">

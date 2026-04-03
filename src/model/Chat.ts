@@ -1,3 +1,5 @@
+import { immerable } from "immer";
+
 export type ModelList =
   | "gpt-5"
   | "gpt-4o"
@@ -11,6 +13,8 @@ export class Chat {
   llmModel: ModelList;
   prompt: string;
   response?: string;
+  //  Every other object [aside from plain objects] must use the immerable symbol to mark itself as compatible with Immer
+  [immerable] = true;
 
   constructor(llmModel: ModelList, prompt: string, response?: string) {
     this.id = crypto.randomUUID();

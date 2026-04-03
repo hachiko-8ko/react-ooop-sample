@@ -1,6 +1,6 @@
 import type { StateDispatcher } from "../utilities/StateTypes";
 import type { Chat } from "../model/Chat";
-import { produce } from 'immer';
+import { produce } from "immer";
 
 /**
  * This service encapsulates the logic dealing with storing the list of chats,
@@ -37,8 +37,9 @@ export default class ChatService {
   }
   updateResponse(id: string, response: string) {
     // Used by the simulated chatbot to update the response
-    this.chatsUpdater(
-      produce((draft) => {
+    // Because this is called in a setTimeout, it benefits from this produce overload
+    this.chatsUpdater((_) =>
+      produce(_, (draft) => {
         const toUpdate = draft.find((f) => f.id === id);
         if (!toUpdate) {
           throw new Error("Chat not found. This is a bug.");
@@ -49,8 +50,6 @@ export default class ChatService {
   }
   replaceChats(chats: Chat[]) {
     // no need to use immer here
-    this.chatsUpdater(() => {
-      return [...chats];
-    });
+    this.chatsUpdater(chats);
   }
 }

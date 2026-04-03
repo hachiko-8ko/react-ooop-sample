@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-import { faEdit } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import ChatService from '../../services/ChatService';
-import ChatEditor from '../chat-editor/ChatEditor';
-import ChatListViewModel from './ChatListViewModel';
+import ChatService from "../../services/ChatService";
+import ChatEditor from "../chat-editor/ChatEditor";
+import ChatListViewModel from "./ChatListViewModel";
 
 import type { Chat } from "../../model/Chat";
 import type { RootState } from "../../global-state/Store";
@@ -26,8 +26,8 @@ export default function ChatList() {
   // (because I want to test both kinds of state).
   const startingChats = useSelector((state: RootState) => state.chat.chats);
   useEffect(() => {
-    if (startingChats && startingChats.length && chats.length === 0) {
-      chatsUpdater(startingChats);
+    if (startingChats && startingChats.length && !chats.length) {
+      vm.replaceChats(startingChats);
     }
   }, [startingChats]);
 
